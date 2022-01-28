@@ -50,18 +50,18 @@ async def tag_check(_, message):
            await message.reply(f"**Error:**\n`{be}`")
            return
        text = f"""
-**Heya {message.from_user.mention}**
-Please add our tag in your name to
-chat again in the group.
+**Nào {message.from_user.mention}**
+Vui lòng thêm hashtag của nhóm vào tên của bạn để
+có thể trò chuyện lại trong nhóm.
 
-**Tag:** `{TAG}`
-**Note:** __Click The Below Button For
-Unmuting YourSelf!__
+**Hashtag:** `{TAG}`
+**Ghi chú:** __Bấm vào nút bên dưới cho
+mở chat cho bản thân!__
 """
        await message.reply(
         text,
         reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("Unmute Me", callback_data=f"unmute_{user}")]
+            [InlineKeyboardButton("Mở chat", callback_data=f"unmute_{user}")]
            ]
          )
        )
@@ -70,14 +70,14 @@ Unmuting YourSelf!__
 async def unmute(client, cb):
     user = int(cb.matches[0].group(1))
     if cb.from_user.id != user:
-      await cb.answer("This Button is not for you!", show_alert=True)
+      await cb.answer("Nút này không dành cho bạn!", show_alert=True)
       return
     if TAG in cb.from_user.first_name:
       await tagcheck.unban_chat_member(cb.message.chat.id, user)
-      await cb.answer("Succesfully Unmuted!")
+      await cb.answer("Mở chat thành công!")
       await message.delete()
       return
-    await cb.answer("Please add tag in your name!", show_alert=True)
+    await cb.answer("Vui lòng thêm thẻ vào tên của bạn!", show_alert=True)
 
 
 tagcheck.run()
